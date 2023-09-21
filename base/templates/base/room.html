@@ -2,21 +2,11 @@
 <style>
   .room-container {
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 3fr 1fr;
   }
 </style>
 
 <div class="room-container">
-  <div>
-    <h2>Participants</h2>
-    <hr />
-    {% for participant in participants %}
-    <div>
-      <p>@{{participant.username}}</p>
-    </div>
-    {% endfor %}
-  </div>
-
   <div class="">
     <h1>{{room.name}}</h1>
     <p>{{room.description}}</p>
@@ -55,7 +45,13 @@
   </div>
 
   <div>
-    <h3>Recent Activity</h3>
+    <h2>Participants</h2>
+    <hr />
+    {% for participant in participants %}
+    <div>
+      <p>@{{participant.username}}</p>
+    </div>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

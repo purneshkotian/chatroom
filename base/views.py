@@ -63,15 +63,18 @@ def home(request):
         Q(name__icontains=q) |
         Q(description__icontains=q)
     )
+    room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
     room_count = rooms.count()
     topics = Topic.objects.all()
-    context = {'rooms': rooms, 'topics': topics, 'room_count': room_count}
+    context = {'rooms': rooms, 'topics': topics,
+               'room_count': room_count,
+               'room_messages': room_messages}
     return render(request, 'base/home.html', context)
 
 
 def room(request, val):
     room = Room.objects.get(id=val)
-    room_messages = room.message_set.all().order_by('-created')
+    room_messages = room.message_set.all()
     participants = room.participants.all()
 
     if request.method == 'POST':
@@ -86,6 +89,17 @@ def room(request, val):
     context = {'room': room, 'room_messages': room_messages,
                'participants': participants}
     return render(request, 'base/room.html', context)
+
+
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {'user': user, 'rooms': rooms,
+               'room_messages': room_messages,
+               'topics': topics}
+    return render(request, 'base/profile.html', context)
 
 
 @login_required(login_url='base/login')
