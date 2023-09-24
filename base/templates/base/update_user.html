@@ -20,18 +20,21 @@
                 </div>
                 <div class="layout__body">
                     <form class="form" action="" method="POST">
+                      {% csrf_token %}
+                      {% for field in form %}
                         <div class="form__group">
-                            <label for="profile_pic">Avatar</label>
-                            <input id="profile_pic" name="profile_pic" type="file" />
+                            <label for="profile_pic">{{field.label}}</label>
+                            {{field}}
                         </div>
+                      {% endfor %}
                         <div class="form__action">
-                            <a class="btn btn--dark" href="{% url 'home' %}">Cancel</a>
+                            <a class="btn btn--dark" href="{{request.META.HTTP_REFERER}}">Cancel</a>
                             <button class="btn btn--main" type="submit">Update</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+                      </div>
+                  </form>
+               </div>
+          </div>
       </div>
-    </main>
+    </div>
+</main>
 {% endblock %}
