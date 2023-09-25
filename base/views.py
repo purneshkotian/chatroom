@@ -103,7 +103,7 @@ def userProfile(request, pk):
     return render(request, 'base/profile.html', context)
 
 
-@login_required(login_url='base/login')
+@login_required(login_url='login')
 def createRoom(request):
     form = RoomForm()
     topics = Topic.objects.all()
@@ -127,7 +127,7 @@ def createRoom(request):
     return render(request, 'base/room_form.html', context)
 
 
-@login_required(login_url='base/login')
+@login_required(login_url='base/login_register.html')
 def updateRoom(request, pk):
     room = Room.objects.get(id=pk)
     form = RoomForm(instance=room)
